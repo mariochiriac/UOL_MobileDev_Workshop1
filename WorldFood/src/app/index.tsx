@@ -1,5 +1,6 @@
 import { convertFontWeightToComposeFontWeight } from "expo-router/build/utils/font";
-import { ScrollView, Image, Text, View, StyleSheet } from "react-native";
+import { ScrollView, Image, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Link, useRouter } from 'expo-router';
 import FoodItem from './components/FoodItem';
 
 const items = [
@@ -42,15 +43,37 @@ const items = [
    ];
 
 export default function Index() {
+  const router = useRouter();
+
+  const openFoodInfo = (fooditem: typeof items[0]) => {
+    router.push({
+      pathname: '/FoodInfoScreen',
+      params: {
+        name: fooditem.text,
+        image: fooditem.image,
+        description: fooditem.description,
+      }
+    });
+  };
+
   return (
     <View style={styles.container2}>
       <TitleBar></TitleBar>
+      <Link style={styles.link} href="/about">About Screen</Link>
       <Text style={styles.subtitle}>World Foods</Text>
       <ScrollView>
         {/* Map food items from list */}
-        {items.map((foodItem, index) => (
-          <FoodItem name={foodItem.text} source={foodItem.image} key={index}/>
-        ))}
+        {items.map((fooditem, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => openFoodInfo(fooditem)}
+            activeOpacity={0.7}
+            >
+            <FoodItem name={fooditem.text} source={fooditem.image}/>
+            </TouchableOpacity>
+          )
+        )
+        }
       </ScrollView>
     </View>
   );
@@ -70,7 +93,7 @@ const styles = StyleSheet.create({
   },
   container2: {
     flex: 1,
-    backgroundColor: '#aeaeff'
+    backgroundColor: '#FAF7F2'
   },
   titlebar: {
     justifyContent: 'center',
@@ -78,7 +101,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 15,
     flexDirection: 'row',
-    backgroundColor: '#1d33a0ff'
+    backgroundColor: '#173B32'
   },
   avatar: {
     width: 72,
@@ -86,12 +109,17 @@ const styles = StyleSheet.create({
     borderRadius: 22
   },
   subtitle: {
-    color: '#ff0000',
+    color: '#E96B45',
     fontSize: 20,
     fontWeight: '500',
     padding: 10,
     paddingLeft: 20,
     backgroundColor: '#fff',
+  },
+  link: {
+    color: '#888',
+    marginVertical: 10,
+    borderBottomWidth: 1
   }
 });
 

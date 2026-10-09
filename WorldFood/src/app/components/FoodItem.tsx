@@ -14,10 +14,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingBottom: 10,
         paddingTop: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10
     },
     name: {
-        color: '#fff',
+        color: '#E96B45',
         fontSize: 16,
         fontWeight: '500',
         marginLeft: 15
